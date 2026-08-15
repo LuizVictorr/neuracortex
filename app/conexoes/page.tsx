@@ -1,5 +1,5 @@
 import { getGraphData } from "@/lib/content"
-import { GraphViewer } from "@/components/graph-viewer"
+import { GraphViewer } from "./_components/graph-viewer"
 
 export const metadata = {
     title: "Conexões - NeuraCortex",

@@ -8,121 +8,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Notebook {
-  id                 String         @id @default(uuid())
-  title              String
-  backgroundNoteSlug String?
-  userId             String?
-  user               User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  pages              NotebookPage[]
-  createdAt          DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
-}
-
-model NotebookPage {
-  id         String   @id @default(uuid())
-  pageNumber Int      // Order of the pages
-  canvasData String   // Serialized paths string "[]"
-  notebookId String
-  notebook   Notebook @relation(fields: [notebookId], references: [id], onDelete: Cascade)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
-// --- Vídeos e Disciplinas ---
-
-model AreaConhecimento {
-  id          String       @id @default(uuid())
-  nome        String       @unique // ex: Ciências da Natureza
-  disciplinas Disciplina[]
-  questoes    Questao[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-}
-
-model Disciplina {
-  id                 String           @id @default(uuid())
-  nome               String           @unique // ex: Física
-  areaConhecimentoId String
-  areaConhecimento   AreaConhecimento @relation(fields: [areaConhecimentoId], references: [id], onDelete: Cascade)
-  assuntos           Assunto[]
-  questoes           Questao[]
-  createdAt          DateTime         @default(now())
-  updatedAt          DateTime         @updatedAt
-}
-
-model Assunto {
-  id           String     @id @default(uuid())
-  nome         String     // ex: Cinemática
-  disciplinaId String
-  disciplina   Disciplina @relation(fields: [disciplinaId], references: [id], onDelete: Cascade)
-  aulas        Aula[]
-  questoes     Questao[]
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-}
-
-model Aula {
-  id         String       @id @default(uuid())
-  titulo     String // ex: Introdução à Cinemática
-  videoUrl   String? // URL ou ID do vídeo (YouTube, Vimeo, etc)
-  descricao  String? // Descrição da aula
-  concluida  Boolean      @default(false)
-  avaliacao  Int? // Avaliação de 1 a 5
-  ordem      Int          @default(0) // Ordem da aula dentro do assunto
-  assuntoId  String
-  assunto    Assunto      @relation(fields: [assuntoId], references: [id], onDelete: Cascade)
-  materiais  Material[]
-  comentarios Comentario[]
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-}
-
-model Material {
-  id        String   @id @default(uuid())
-  nome      String
-  url       String
-  aulaId    String
-  aula      Aula     @relation(fields: [aulaId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Comentario {
-  id        String   @id @default(uuid())
-  conteudo  String
-  aulaId    String
-  aula      Aula     @relation(fields: [aulaId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Questao {
-  id                 String   @id @default(uuid())
-  textoBase          String   // Texto ou HTML contendo texto e imagens
-  referencia         String?  // ex: Adaptado de...
-  comando            String   // O "comando" da questão
-  alternativas       String   // JSON stringified com as alternativas e qual é a correta
-  instituicao        String?  // ex: ENEM, FUVEST
-  ano                Int?
-  dificuldade        String?  // Fácil, Médio, Difícil
-  
-  // Relações
-  areaConhecimentoId String
-  areaConhecimento   AreaConhecimento @relation(fields: [areaConhecimentoId], references: [id])
-  disciplinaId       String
-  disciplina         Disciplina       @relation(fields: [disciplinaId], references: [id])
-  assuntoId          String
-  assunto            Assunto          @relation(fields: [assuntoId], references: [id])
-
-  // Status (Simplificado para banco local/single-user)
-  jaAcertei          Boolean @default(false)
-  jaErrei            Boolean @default(false)
-
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-}
-
 // --- Autenticação (NextAuth.js) ---
 
 model Account {
@@ -161,7 +46,6 @@ model User {
   password      String?
   accounts      Account[]
   sessions      Session[]
-  notebooks     Notebook[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }

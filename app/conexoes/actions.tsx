@@ -4,7 +4,7 @@ import React from "react"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import remarkGfm from "remark-gfm"
 import rehypePrettyCode from "rehype-pretty-code"
-import { mdxComponents } from "@/components/mdx-components"
+import { mdxComponents } from "../conhecimento/_components/mdx/mdx-components"
 
 export async function getRenderedNodeContent(content: string) {
     if (!content) return null;

@@ -1,5 +1,5 @@
 import { getSidebarTree } from "@/lib/content"
-import { ConhecimentoSidebar } from "@/components/conhecimento-sidebar"
+import { ConhecimentoSidebar } from "./_components/conhecimento-sidebar"
 
 export default function ConhecimentoLayout({
     children,

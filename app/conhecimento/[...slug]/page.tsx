@@ -5,8 +5,8 @@ import { getAllMdxFiles, getMdxContent } from "@/lib/content"
 import path from "path"
 import rehypePrettyCode from "rehype-pretty-code"
 import remarkGfm from "remark-gfm"
-import { mdxComponents } from "@/components/mdx-components"
-import { DocumentMenu } from "@/components/document-menu"
+import { mdxComponents } from "../_components/mdx/mdx-components"
+import { DocumentMenu } from "../_components/document-menu"
 
 interface DocPageProps {
     params: Promise<{

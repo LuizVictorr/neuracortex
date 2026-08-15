@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { Search, FileText, BookOpen, GraduationCap, Video, HelpCircle } from "lucide-react"
+import { Search, FileText } from "lucide-react"
 import {
     CommandDialog,
     CommandEmpty,
@@ -10,7 +10,6 @@ import {
     CommandInput,
     CommandItem,
     CommandList,
-    CommandSeparator,
 } from "@/components/ui/command"
 import { globalSearch, SearchResult } from "@/app/actions/global-search"
 import { useDebounce } from "@/hooks/use-debounce"
@@ -67,17 +66,12 @@ export function CommandSearch({
         router.push(url)
     }
 
-    const categories = {
-        Conhecimento: results.filter(r => r.category === "Conhecimento"),
-        Anotações: results.filter(r => r.category === "Anotações"),
-        Disciplinas: results.filter(r => r.category === "Disciplinas"),
-        Questões: results.filter(r => r.category === "Questões"),
-    }
+    const conhecimentoResults = results.filter(r => r.category === "Conhecimento")
 
     return (
         <CommandDialog open={open} onOpenChange={setOpen} container={container}>
             <CommandInput
-                placeholder="Busque em conhecimentos, anotações ou aulas..."
+                placeholder="Busque em conhecimentos..."
                 value={query}
                 onValueChange={setQuery}
             />
@@ -89,9 +83,9 @@ export function CommandSearch({
                 )}
                 <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
 
-                {categories.Conhecimento.length > 0 && (
+                {conhecimentoResults.length > 0 && (
                     <CommandGroup heading="Conhecimento">
-                        {categories.Conhecimento.map((res) => (
+                        {conhecimentoResults.map((res) => (
                             <CommandItem
                                 key={res.id}
                                 value={res.title}
@@ -99,75 +93,6 @@ export function CommandSearch({
                                 className="flex items-center gap-2 cursor-pointer"
                             >
                                 <FileText className="w-4 h-4 text-emerald-500" />
-                                <div className="flex flex-col">
-                                    <span className="font-medium">{res.title}</span>
-                                    {res.description && (
-                                        <span className="text-[10px] text-muted-foreground line-clamp-1">
-                                            {res.description}
-                                        </span>
-                                    )}
-                                </div>
-                            </CommandItem>
-                        ))}
-                    </CommandGroup>
-                )}
-
-                {categories.Anotações.length > 0 && (
-                    <CommandGroup heading="Anotações">
-                        {categories.Anotações.map((res) => (
-                            <CommandItem
-                                key={res.id}
-                                value={res.title}
-                                onSelect={() => onSelect(res.url)}
-                                className="flex items-center gap-2 cursor-pointer"
-                            >
-                                <BookOpen className="w-4 h-4 text-amber-500" />
-                                <div className="flex flex-col">
-                                    <span className="font-medium">{res.title}</span>
-                                    {res.description && (
-                                        <span className="text-[10px] text-muted-foreground line-clamp-1">
-                                            {res.description}
-                                        </span>
-                                    )}
-                                </div>
-                            </CommandItem>
-                        ))}
-                    </CommandGroup>
-                )}
-
-                {categories.Disciplinas.length > 0 && (
-                    <CommandGroup heading="Disciplinas">
-                        {categories.Disciplinas.map((res) => (
-                            <CommandItem
-                                key={res.id}
-                                value={res.title}
-                                onSelect={() => onSelect(res.url)}
-                                className="flex items-center gap-2 cursor-pointer"
-                            >
-                                <Video className="w-4 h-4 text-primary" />
-                                <div className="flex flex-col">
-                                    <span className="font-medium">{res.title}</span>
-                                    {res.description && (
-                                        <span className="text-[10px] text-muted-foreground line-clamp-1">
-                                            {res.description}
-                                        </span>
-                                    )}
-                                </div>
-                            </CommandItem>
-                        ))}
-                    </CommandGroup>
-                )}
-
-                {categories.Questões.length > 0 && (
-                    <CommandGroup heading="Questões do Banco">
-                        {categories.Questões.map((res) => (
-                            <CommandItem
-                                key={res.id}
-                                value={res.title + " " + res.description}
-                                onSelect={() => onSelect(res.url)}
-                                className="flex items-center gap-2 cursor-pointer"
-                            >
-                                <GraduationCap className="w-4 h-4 text-purple-500" />
                                 <div className="flex flex-col">
                                     <span className="font-medium">{res.title}</span>
                                     {res.description && (

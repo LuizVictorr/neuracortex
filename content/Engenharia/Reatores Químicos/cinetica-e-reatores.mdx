@@ -1,0 +1,50 @@
+---
+title: "Cinética Química e Design de Reatores"
+description: "Dimensionamento de reatores CSTR, PFR e batelada e velocidade de reação."
+order: 1
+connections:
+  - "Engenharia/Termodinâmica/leis-da-termodinamica"
+  - "Engenharia/Balanço e Processo Químicos/balanco-de-massa-e-energia"
+  - "Engenharia/Operações Unitárias/transferencia-de-massa"
+---
+
+# 🧪 Cinética Química e Design de Reatores
+
+O projeto de **Reatores Químicos** é o coração da engenharia química, responsável por converter matérias-primas em produtos desejados com alta seletividade e eficiência.
+
+---
+
+## ⏱️ Velocidade de Reação
+
+A taxa com que um reagente A se consome é modelada pela equação cinética:
+
+```math
+-r_A = k(T) * (C_A ^ n)
+```
+
+A constante de velocidade k(T) segue a Equação de Arrhenius:
+
+```math
+k(T) = A * exp(-E_a / (R * T))
+```
+
+---
+
+## 🔄 Tipos Principais de Reatores Idealizados
+
+1. **Reator Batelada (Batch):** Operação descontínua em sistema fechado.
+2. **CSTR (Continuous Stirred-Tank Reactor):** Reator contínuo com mistura perfeita e concentração uniforme.
+3. **PFR (Plug Flow Reactor):** Reator tubular contínuo com escoamento pistão (sem mistura axial).
+
+---
+
+## 📊 Equação de Projeto do CSTR
+
+```math
+V = (F_A0 * X) / (-r_A)
+```
+
+Onde:
+- **V**: Volume do reator
+- **F_A0**: Fluxo molar de alimentação
+- **X**: Conversão desejada
